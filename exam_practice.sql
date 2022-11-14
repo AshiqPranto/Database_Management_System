@@ -75,4 +75,62 @@ SELECT *
 FROM TABLE NAME 
 [LIMIT m,n]
 
+// The NOT IN(...) operator
+SELECT *
+FROM instructor
+WHERE NAME NOT  IN ('pranto','Zahid');
+
+SELECT *
+FROM instructor
+WHERE id IN (SELECT id FROM instructor WHERE id<500);
+
+// The BETWEEN Operator
+SELECT sname
+FROM instructor
+WHERE salary<=10000 AND salary>=5000;
+
+this can be writen WITH BETWEEN operator
+
+SELECT sname 
+FROM instructor
+WHERE salary BETWEEN 5000 AND 10000;	
+
+// IS NULL operator
+SELECT * FROM instructor
+WHERE salary <=> NULL 
+
+SELECT * FROM instructor
+WHERE salary IS NULL
+
+//Like Operator
+% - The percent sign represent zero, one or multiple characters <br>
+_ - The underscore represents a single CHARACTER
+SELECT * FROM instructor 
+WHERE id LIKE '%5_'
+
+//Find the average salary of the instructors in the CSE department
+SELECT AVG(salary)
+FROM instructor
+WHERE dept_name = 'CSE'
+
+//Find the number of departments in the instructor relation
+SELECT COUNT(DISTINCT dept_name)
+FROM instructor
+
+//Find the number of tuples in the instructor relation
+SELECT COUNT(*) AS num_row
+FROM instructor
+
+//Aggregate functions Group by
+
+SELECT dept_name,AVG(salary) AS avg_salary
+FROM instructor
+GROUP BY dept_name;
+
+//Find the number of instructors in each department
+SELECT dept_name,COUNT(id) AS num_of_teacher
+FROM instructor 
+GROUP BY dept_name;
+
+
 
