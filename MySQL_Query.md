@@ -3,7 +3,7 @@
 CREATE TABLE department(
 	dept_name VARCHAR(100),
 	building VARCHAR(120) NOT NULL,
-	budget NUMERIC(12,2) NOT NULL,
+	budget NUMERIC(12,2) NOT NULL DEFAULT 'undecided',
 	num_staff INT,
 	PRIMARY KEY(dept_name)
 )
@@ -156,4 +156,66 @@ SELECT dept_name,COUNT(id) AS num_of_teacher
 FROM instructor 
 GROUP BY dept_name;
 ```
-
+## Natural join between 2 table
+```
+SELECT branch_name,first_name,last_name
+FROM employee
+[LEFT|RIGHT] JOIN branch
+ON employee.emp_id = branch.mgr_id;
+```
+## Nested Query
+```
+SELECT employee.first_name,employee.last_name
+FROM employee
+WHERE employee.emp_id IN (
+	SELECT emp_id
+	FROM works_with
+	WHERE total_sales > 30000
+);
+```
+## Triggers
+```
+delimiter |
+CREATE OR REPLACE TRIGGER triggertest
+BEFORE INSERT 
+ON table1
+FOR EACH ROW 
+BEGIN
+	INSERT INTO table2 VALUES(NEW.id,NEW.name);
+END;
+| 
+delimiter ;
+```
+## Triggers with Conditional statement
+```
+DELIMITER |
+CREATE
+    TRIGGER my_trigger BEFORE INSERT
+    ON employee
+    FOR EACH ROW BEGIN
+         IF NEW.sex = 'M' THEN
+               INSERT INTO trigger_test VALUES('added male employee');
+         ELSEIF NEW.sex = 'F' THEN
+               INSERT INTO trigger_test VALUES('added female');
+         ELSE
+               INSERT INTO trigger_test VALUES('added other employee');
+         END IF;
+    END
+|
+DELIMITER ;
+```
+### Example of one complex query
+```
+SELECT t.eName 
+FROM 
+(
+	SELECT * 
+	FROM employee
+	NATURAL JOIN 
+	manages
+) AS t 
+INNER JOIN 
+employee AS e
+ON t.mName = e.eName
+AND t.city = e.city AND t.street = e.street;
+```

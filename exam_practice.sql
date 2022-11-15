@@ -121,7 +121,7 @@ FROM instructor
 SELECT COUNT(*) AS num_row
 FROM instructor
 
-//Aggregate functions Group by
+//AggregaStudentte functions Group by
 
 SELECT dept_name,AVG(salary) AS avg_salary
 FROM instructor
@@ -132,5 +132,59 @@ SELECT dept_name,COUNT(id) AS num_of_teacher
 FROM instructor 
 GROUP BY dept_name;
 
+CREATE TABLE student(
+	student_id INT,
+	name VARCHAR(20),
+	major VARCHAR(20),
+	PRIMARY KEY(student_id)
+);
+SELECT * FROM student;
+INSERT INTO student(student_id,NAME,major)
+VALUES(3,'claire','chemistry'),
+(4,'mike','computer science');
 
+SELECT * 
+FROM student 
+
+
+UPDATE studentstudentstudent
+SET major = 'bioupdated'
+WHERE student_id IN (1,2);
+
+SELECT * FROM table2;
+
+TRUNCATE table2;
+
+INSERT INTO table1(id,NAME)
+VALUES(1,'pranto'),
+(2,'adrita'),
+(3,'komol'); 
+CREATE TABLE table2(
+	id INT NOT NULL PRIMARY KEY,
+	name VARCHAR(10)
+);
+
+delimiter |
+CREATE OR REPLACE TRIGGER triggertest
+BEFORE INSERT 
+ON table1
+FOR EACH ROW 
+BEGIN
+	INSERT INTO table2 VALUES(NEW.id,NEW.name);
+END;
+| 
+delimiter ;
+
+SELECT t.eName 
+FROM 
+(
+	SELECT * 
+	FROM employee
+	NATURAL JOIN 
+	manages
+) AS t 
+INNER JOIN 
+employee AS e
+ON t.mName = e.eName
+AND t.city = e.city AND t.street = e.street;
 
